@@ -3,7 +3,7 @@ Current bot Functions(More to be added in the Future)\
 Custom Activity Status\
 Greets new users\
 Custom Commands\
-    -!help                              Prints a Help Menu
+    -!help                              Prints a Help Menu\
     -!ban <user> <reason>               Bans Users\
     -!unban <userid>                    Unbans Users\
     -!prefix <new_prefix>               Changes the bot prefix\
@@ -15,4 +15,5 @@ Custom Commands\
 
 TO BE ADDED:\
     Music bot commands using YT\
-    Command to change the channel where welcome message is used
+    Command to change the channel where welcome message is used\
+    Lyric Command for a song
