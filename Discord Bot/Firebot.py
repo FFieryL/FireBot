@@ -14,8 +14,8 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 #Event Handler
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Streaming(name="💻Beep Boop💻", url = 'https://discord.gg/sjfExsHCgF'))
-    print(f'Logged in as {bot.user.name}')
+    await bot.change_presence(activity=discord.Streaming(name="💻Beep Boop💻" ))
+    print(f'{bot.user.name} is up and ready')
 
 #Welcome Message
 @bot.event
@@ -27,7 +27,7 @@ async def on_member_join(member):
 #status command
 @bot.command(brief = 'Change bot activity status', help = 'Usage - !status <status>')
 async def status(ctx, * , status: str):
-    activity = discord.Streaming(name=status.strip('()\''), url = 'https://discord.gg/sjfExsHCgF')
+    activity = discord.Streaming(name=status.strip('()\''))
     await bot.change_presence(activity=activity)
 
 #Change prefix
