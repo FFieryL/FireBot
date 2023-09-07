@@ -4,6 +4,7 @@ from discord.ext import commands
 from weatherapi import weather_api
 import requests
 from googletrans import Translator
+from languageconvert import languages
 
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
@@ -96,12 +97,16 @@ def weatherdata(town):
 async def translate(ctx, language , * , text):
     await ctx.message.delete()
     translator = Translator()
+    source = translator.detect(text)
+    sourcelang = languages[f'{source.lang}']
     try:
         translated = translator.translate(text, dest=language)
-        await ctx.send(f"Original: {text}\n{language} translation: {translated.text}")
+        await ctx.send(f"{sourcelang}: {text}\n{language} translation: {translated.text}")
     except Exception as error:
         await ctx.send("Something went wrong, Please check the spelling on the language specified")
         print(error)
+        
+
 
 # Run the bot with your token
 bot.run(discord_api)
