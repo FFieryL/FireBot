@@ -3,6 +3,8 @@ from discordapi import discord_api
 from discord.ext import commands
 from weatherapi import weather_api
 import requests
+from googletrans import Translator
+from langdetect import detect
 
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
@@ -14,7 +16,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 #Event Handler
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Streaming(name="💻Beep Boop💻" ))
+    await bot.change_presence(activity=discord.Streaming(name="💻Beep Boop💻", url = 'test'))
     print(f'{bot.user.name} is up and ready')
 
 #Welcome Message
@@ -27,7 +29,7 @@ async def on_member_join(member):
 #status command
 @bot.command(brief = 'Change bot activity status', help = 'Usage - !status <status>')
 async def status(ctx, * , status: str):
-    activity = discord.Streaming(name=status.strip('()\''))
+    activity = discord.Streaming(name=status.strip('()\''), url = 'test')
     await bot.change_presence(activity=activity)
 
 #Change prefix
@@ -91,6 +93,17 @@ def weatherdata(town):
     response = requests.get('https://api.openweathermap.org/data/2.5/weather', params = params)
     return response.json()
 
-    
+@bot.command(brief= 'Used to translate text to a different language', help = 'Usage - !translate "<language>" <text>\n (Quotation marks around the desired language are needed for languages that are multi worded such as \'Chinese (simplified)\')')
+async def translate(ctx, language , * , text):
+    await ctx.message.delete()
+    translator = Translator()
+    try:
+        original = detect(text)
+        translated = translator.translate(text, dest=language)
+        await ctx.send(f"{original}: {text}\n{language} translation: {translated.text}")
+    except Exception as error:
+        await ctx.send("Translation failed. Please check your input and target language.")
+        print(error)
+
 # Run the bot with your token
 bot.run(discord_api)
